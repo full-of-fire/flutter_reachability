@@ -15,12 +15,12 @@ enum NetworkStatus {
 
 class FlutterReachbility {
 
-  static FlutterReachbility _instance;
+  static FlutterReachbility? _instance;
   factory FlutterReachbility() {
     if(_instance == null) {
       _instance = FlutterReachbility._();
     }
-    return _instance;
+    return _instance!;
   }
   FlutterReachbility._();
 
@@ -29,9 +29,9 @@ class FlutterReachbility {
 
   static const EventChannel _eventChannel = const EventChannel("flutter_plugin_reachability_status");
 
-  Stream<NetworkStatus> _onNetworkStateChanged;
+  Stream<NetworkStatus>? _onNetworkStateChanged;
 
-  Stream<NetworkStatus> get onNetworkStateChanged {
+  Stream<NetworkStatus>? get onNetworkStateChanged {
     if(_onNetworkStateChanged == null) {
       _onNetworkStateChanged = _eventChannel.receiveBroadcastStream().map((event) => event.toString()).map(_convertFromState);
     }
@@ -39,11 +39,11 @@ class FlutterReachbility {
   }
 
   Future<NetworkStatus> currentNetworkStatus() async {
-    final String state = await _channel.invokeMethod("networkStatus");
+    final String? state = await _channel.invokeMethod("networkStatus");
     return _convertFromState(state);
   }
 
-  NetworkStatus _convertFromState(String state) {
+  NetworkStatus _convertFromState(String? state) {
     switch(state){
       case "0":
         return NetworkStatus.unreachable;
