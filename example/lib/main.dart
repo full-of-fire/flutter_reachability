@@ -18,7 +18,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String _networkStatus = 'Unknown';
-  StreamSubscription<NetworkStatus> subscription;
+  late StreamSubscription<NetworkStatus> subscription;
 
   @override
   void initState() {
@@ -30,7 +30,7 @@ class _MyAppState extends State<MyApp> {
     if(Platform.isAndroid) {
       await Permission.phone.request();
     }
-    subscription = FlutterReachbility().onNetworkStateChanged.listen((event) {
+    subscription = FlutterReachbility().onNetworkStateChanged!.listen((event) {
 
       setState(() {
         _networkStatus = "${event}";
